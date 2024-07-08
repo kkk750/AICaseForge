@@ -6,7 +6,7 @@ from text2vec import SentenceModel, Word2Vec
 
 
 def compute_emb(model: str, sentences: list[str]):
-    """本地加载预训练模型，得到句子的向量表示"""
+    """本地/远端加载预训练模型，得到句子的向量表示"""
     model = SentenceModel(model)
     sentence_embeddings = model.encode(sentences, show_progress_bar=True, normalize_embeddings=True)
     for sentence, embedding in zip(sentences, sentence_embeddings):
@@ -22,7 +22,7 @@ def get_model(model: str) -> str:
     Args:
         model: (str) 配置文件中的模型名称key，用于获取模型的相对路径
     Returns:
-        模型的绝对路径。这个路径可以直接用于访问或加载模型文件
+        模型路径
     """
     # 获取配置文件的路径
     current_file_path = os.path.abspath(__file__)
@@ -31,10 +31,11 @@ def get_model(model: str) -> str:
     config = configparser.ConfigParser()
     with open(config_path, 'r', encoding='utf-8') as f:
         config.read_file(f)
-    model = config['text2vec'][model]
+    model = config['model'][model]
 
-    # 构建模型的绝对路径
-    current_file_path = os.path.dirname(os.path.abspath(__file__))
-    model_absolute_path = os.path.join(current_file_path, '..', '..', model)
-    model = os.path.normpath(model_absolute_path)
+    if model.startswith('model/'):
+        # 构建模型的绝对路径
+        current_file_path = os.path.dirname(os.path.abspath(__file__))
+        model_absolute_path = os.path.join(current_file_path, '..', '..', model)
+        model = os.path.normpath(model_absolute_path)
     return model
