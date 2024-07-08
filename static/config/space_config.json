@@ -1,0 +1,69 @@
+{
+  "space1": {
+    "name": "space_name",
+    "partition_num": 1,
+    "replica_num": 1,
+    "engine": {
+      "name": "gamma",
+      "index_size": 1,
+      "id_type": "String",
+      "retrieval_type": "HNSW",
+      "retrieval_param": {
+        "metric_type": "InnerProduct",
+        "nlinks": 32,
+        "efConstruction": 140,
+        "efSearch": 64
+      }
+    },
+    "properties": {
+      "feature": {
+        "dimension": "dimension",
+        "type": "vector"
+      },
+      "sentence": {
+        "type": "string"
+      },
+      "content": {
+        "type": "string"
+      },
+      "metadata": {
+        "type": "string"
+      },
+      "source": {
+        "type": "string"
+      }
+    }
+  },
+  "space2": {
+    "name": "space_name",
+    "partition_num": 1,
+    "replica_num": 1,
+    "engine": {
+      "name": "gamma",
+      "index_size": 1,
+      "id_type": "String",
+      "retrieval_type": "HNSW",
+      "retrieval_param": {
+        "metric_type": "InnerProduct",
+        "nlinks": 32,
+        "efConstruction": 140,
+        "efSearch": 64
+      }
+    },
+    "properties": {
+      "feature": {
+        "dimension": "dimension",
+        "type": "vector"
+      },
+      "doc": {
+        "type": "string"
+      },
+      "relevant_doc": {
+        "type": "string"
+      },
+      "source": {
+        "type": "string"
+      }
+    }
+  }
+}

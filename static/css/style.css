@@ -1,0 +1,138 @@
+.loading-overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 999;
+}
+
+.loading-overlay-form {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* 半透明黑色背景 */
+  z-index: 999;
+  /* 确保遮罩层在其他内容之上 */
+  display: none;
+  /* 默认不显示 */
+}
+
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #ff0000;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -25px 0 0 -25px;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+.content-scene {
+  margin: 20px;
+}
+
+.form-inline {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.form-inline .form-item,
+.form-actions button {
+  margin-right: 10px;
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.form-actions button {
+  flex-grow: 0;
+  flex-shrink: 0;
+  padding: 5px 10px;
+}
+
+.form-inline input[type="text"],
+.form-actions button {
+  height: 40px;
+}
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table,
+th {
+  padding: 8px;
+  font-weight: normal;
+}
+
+td {
+  padding: 8px;
+}
+
+thead {
+  background-color: #fafafa;
+}
+
+#pagination-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#pagination-container li {
+  margin: 5px 0;
+}
+
+#pagination-container div button {
+  margin-right: 5px;
+}
+
+.ant-table-tbody>tr>td:nth-child(2) .nereus-link {
+  color: #ce413b;
+}
+
+.nereus-link {
+  padding-bottom: 1px;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  line-height: normal;
+  white-space: normal;
+  cursor: pointer
+}
+
+.nereus-link:hover {
+  border-bottom: 1px solid #ce413b
+}
+
+#detailSpace_Details_Table1 table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px;
+  margin-top: -5px;
+}
+
+#detailSpace_Details_Table1 th,
+#detailSpace_Details_Table1 td {
+  border: 1px solid black;
+  text-align: left;
+  padding: 8px;
+}
+
+#detailSpace_Details_Table1 th {
+  background-color: #fafafa;
+}

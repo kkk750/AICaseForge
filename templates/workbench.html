@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>test-llm-generate</title>
+  <!-- 导入样式文件，可以自己新建一个.css文件并添加 -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <!-- 本地调试 -->
+  <!-- <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/style.css"> -->
+</head>
+
+<body class="body">
+  <div class="navbar-logo-left-2">
+    <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease"
+      role="banner" class="navbar-logo-left-container-2 shadow-three w-nav">
+      <div class="container-2">
+        <div class="navbar-wrapper-2">
+          <a class="navbar-brand-2 w-nav-brand"><img src="{{ url_for('static', filename='images/logo-ai.png') }}"
+              loading="lazy" width="220" sizes="220px" alt=""></a>
+          <nav role="navigation" class="nav-menu-wrapper-2 w-nav-menu">
+            <ul role="list" class="nav-menu-two-2 w-list-unstyled">
+              <li>
+                <a href="{{ url_for('home') }}" class="nav-link-2">主页</a>
+              </li>
+              <li>
+                <a href="{{ url_for('workbench') }}" aria-current="page" class="nav-link-2 w--current">工作台</a>
+              </li>
+              <li>
+                <div data-hover="false" data-delay="0" class="nav-dropdown-2 w-dropdown">
+                  <div class="nav-dropdown-toggle-2 w-dropdown-toggle">
+                    <div class="nav-dropdown-icon-2 w-icon-dropdown-toggle"></div>
+                    <div>资源</div>
+                  </div>
+                  <nav class="nav-dropdown-list-2 shadow-three mobile-shadow-hide w-dropdown-list">
+                    <a href="https://github.com/kkk750/AICaseForge"
+                      class="nav-dropdown-link-2 w-dropdown-link">远程仓库</a>
+                    <a href="#" class="nav-dropdown-link-2 w-dropdown-link">Resource Link 2</a>
+                    <a href="#" class="nav-dropdown-link-2 w-dropdown-link">Resource Link 3</a>
+                  </nav>
+                </div>
+              </li>
+              <li>
+                <div class="nav-divider-2"></div>
+              </li>
+              <li>
+                <a href="https://github.com/kkk750/AICaseForge" target="_blank"
+                  class="nav-link-accent-2">Docs</a>
+              </li>
+            </ul>
+          </nav>
+          <div class="menu-button-2 w-nav-button">
+            <div class="w-icon-nav-menu"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="spark-section">
+    <!-- 操作成功弹窗 -->
+    <div class="ant-popover-inner" id="ant-popover-inner-success" role="tooltip"
+      style="position: fixed; top: 0; left: 50%; transform: translateX(-50%); z-index: 1001; display: none;">
+      <div class="spark-centered-form spark-simple-shadow-small w-form"
+        style="display: flex; flex-direction: column; align-items: center; width: auto; height: auto;">
+        <div class="ant-popover-message" style="display: flex; align-items: center; ">
+          <span role="img" aria-label="check-circle" class="anticon anticon-check-circle"
+            style="display: flex; align-items: center;">
+            <svg viewBox="64 64 896 896" focusable="false" data-icon="check-circle" width="1em" height="1em"
+              fill="currentColor" aria-hidden="true">
+              <path
+                d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+                fill="#52c41a"></path>
+              <path
+                d="M699 353h-46.9c-10.2 0-19.9 4.9-25.9 13.3L469 584.3l-71.2-98.8c-6-8.3-15.6-13.3-25.9-13.3H325c-6.5 0-10.3 7.4-6.5 12.7l124.6 172.8a31.8 31.8 0 0051.7 0l210.6-292c3.9-5.3.1-12.7-6.4-12.7z"
+                fill="#52c41a"></path>
+            </svg>
+          </span>
+          <div class="ant-popover-message-title" style="margin-left: 8px;">操作成功</div>
+        </div>
+      </div>
+    </div>
+    <div class="spark-container w-container">
+      <div class="spark-centered-900"></div>
+      <div data-current="Tab 1" data-easing="ease" data-duration-in="300" data-duration-out="100"
+        class="spark-simple-flat-tab-parent w-tabs">
+        <div class="spark-simple-stacked-flat-tabs w-tab-menu">
+          <a data-w-tab="Tab 1" class="spark-simple-flat-tab w-inline-block w-tab-link w--current">
+            <p class="spark-bold-heading all-paragraph-title a">大模型生成测试用例</p>
+            <p class="spark-small-sub-paragraph">基于智能搜索和大模型的知识库，自动化生成测试用例</p>
+          </a>
+          <a data-w-tab="Tab 2" class="spark-simple-flat-tab w-inline-block w-tab-link">
+            <p data-w-id="d95800fa-b65c-0e20-644a-1150ab891bae" class="spark-bold-heading">上传文件至向量数据库</p>
+            <p class="spark-small-sub-paragraph">
+              解析产品设计文档，将数据以向量形式存储在数据库中，作为大模型的外挂知识库</p>
+          </a>
+          <a data-w-tab="Tab 3" class="spark-simple-flat-tab w-inline-block w-tab-link">
+            <p class="spark-bold-heading">向量数据表空间操作</p>
+            <p class="spark-small-sub-paragraph">管理您的向量数据表，包含了增删改查等多种操作</p>
+          </a>
+        </div>
+        <div class="spark-side-tabs-content w-tab-content">
+          <div data-w-tab="Tab 1" class="w-tab-pane w--tab-active">
+            <div data-current="Tab 1" data-easing="ease" data-duration-in="300" data-duration-out="100"
+              class="spark-tabs-parent w-tabs">
+              <div class="spark-super-simple-flat-tabs-menu w-tab-menu">
+                <a data-w-tab="Tab 1" class="spark-flat-tab spark-small w-inline-block w-tab-link w--current">
+                  <div>仅需求文档</div>
+                </a>
+                <a data-w-tab="Tab 2" class="spark-flat-tab spark-small w-inline-block w-tab-link">
+                  <div>需求+设计文档</div>
+                </a>
+              </div>
+              <div class="spark-tabs-content w-tab-content">
+                <aside data-w-tab="Tab 1" class="tab-pane-tab-1 w-tab-pane w--tab-active">
+                  <div id="genCasePrd_LoadingOverlay" class="loading-overlay" style="display:none;"></div>
+                  <div id="genCasePrd_LoadingSpinner" class="loader" style="display:none;"></div>
+                  <section class="combine-section_contact1">
+                    <div class="combine-padding-global">
+                      <div class="combine-container-small">
+                        <div class="combine-padding-section-medium">
+                          <div class="combine-contact1_component w-form">
+                            <form id="genCasePrd" name="wf-form-Contact-1-Form" data-name="Contact 1 Form"
+                              action="/genCasePrd" method="post" class="combine-form_form"
+                              data-wf-page-id="6616cf61dbfc1d1662ac3191"
+                              data-wf-element-id="69ce856f-ce45-a4f5-40f7-1451cb67078e" enctype="multipart/form-data">
+                              <div class="combine-form_field-wrapper-2">
+                                <label for="genCasePrd_Prompt" class="combine-form_label-2">建议测试点（选填）</label>
+                                <textarea id="genCasePrd_Prompt" name="genCasePrd_Prompt" maxlength="5000"
+                                  data-name="Contact 1 Message 2"
+                                  placeholder="例：&#10;1.xxxx；&#10;2.xxxx；&#10;Tips：分点输入效果更好哦~"
+                                  class="combine-form_text-area-grey-2 w-input"></textarea>
+                              </div>
+                              <div id="w-node-_69ce856f-ce45-a4f5-40f7-1451cb670798-62ac3191"
+                                class="w-layout-layout quick-stack wf-layout-layout">
+                                <div id="w-node-_26d3c861-5def-53dd-7cd2-b874b203f91a-62ac3191" class="w-layout-cell">
+                                  <input type="file" id="genCasePrd_File" name="genCasePrd_File" style="display:none"
+                                    accept="application/pdf">
+                                  <input type="button" data-wait="Please wait..." id="genCasePrd_Upload"
+                                    class="combine-button w-button" value="上传PDF文档">
+                                  <span id="genCasePrd_FileName"></span>
+                                </div>
+                                <div id="w-node-_9f858b10-87ac-f3cd-5397-874d5755cdc4-62ac3191" class="w-layout-cell">
+                                  <div class="div-block-8" style="display: flex;gap: 40px;">
+                                    <div class="div-block-7"><label for="genCasePrd_Dropdown"
+                                        class="ms-input-label">用例类型</label><select id="genCasePrd_Dropdown"
+                                        name="genCasePrd_Dropdown" data-name="genCasePrd_Dropdown" required=""
+                                        data-ms-member="PLACEHOLDER" class="ms-input w-select">
+                                        <option value="xmind">xmind</option>
+                                        <option value="excel">excel</option>
+                                        <option value="markdown">markdown</option>
+                                      </select></div>
+                                    <div class="div-block-7"><label for="genCasePrd_Dropdown_2"
+                                        class="ms-input-label">多模态</label><select id="genCasePrd_Dropdown_2"
+                                        name="genCasePrd_Dropdown_2" data-name="genCasePrd_Dropdown_2"
+                                        data-ms-member="PLACEHOLDER" class="ms-input w-select">
+                                        <option value="none">none</option>
+                                        <option value="gpt4o">gpt4o</option>
+                                      </select></div>
+                                  </div>
+                                </div>
+                                <div id="w-node-_0748e059-3f53-0ebc-e65f-a4ae3321bb7b-62ac3191" class="w-layout-cell">
+                                  <input type="submit" data-wait="Please wait..." id="genCasePrd_Commit"
+                                    class="combine-button w-button" value="生成测试用例">
+                                </div>
+                              </div>
+                            </form>
+                            <div class="combine-form_success-message w-form-done">
+                              <div>Thank you! Your submission has been received!</div>
+                            </div>
+                            <div class="combine-form_error-message w-form-fail">
+                              <div>Oops! Something went wrong while submitting the form.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </aside>
+                <div data-w-tab="Tab 2" class="w-tab-pane">
+                  <div id="genCaseTdd_LoadingOverlay" class="loading-overlay" style="display:none;"></div>
+                  <div id="genCaseTdd_LoadingSpinner" class="loader" style="display:none;"></div>
+                  <section class="combine-section_contact1">
+                    <div class="combine-padding-global">
+                      <div class="combine-container-small">
+                        <div class="combine-padding-section-medium">
+                          <div class="combine-contact1_component w-form">
+                            <form id="genCaseTdd" name="wf-form-Contact-1-Form" data-name="Contact 1 Form"
+                              action="/genCaseTdd" method="post" class="combine-form_form"
+                              data-wf-page-id="6616cf61dbfc1d1662ac3191"
+                              data-wf-element-id="e4791035-32f1-7fc0-1d9b-8cd0362219af" enctype="multipart/form-data">
+                              <div class="combine-form_field-wrapper"><label for="genCaseTdd_SpaceName"
+                                  class="combine-form_label">表空间名称</label>
+                                <input class="combine-form_input-grey w-input" maxlength="256"
+                                  name="genCaseTdd_SpaceName" data-name="Contact 1 Name 3" placeholder="请输入表空间名称"
+                                  type="text" id="genCaseTdd_SpaceName" required="">
+                              </div>
+                              <div class="combine-form_field-wrapper-2"><label for="genCaseTdd_Prompt"
+                                  class="combine-form_label-2">自定义问题</label>
+                                <textarea id="genCaseTdd_Prompt" name="genCaseTdd_Prompt" maxlength="5000"
+                                  data-name="Contact 1 Message 2" required="" placeholder="自定义问题（必填）&#10;"
+                                  class="combine-form_text-area-grey-2 w-input"></textarea>
+                              </div>
+                              <div id="w-node-e4791035-32f1-7fc0-1d9b-8cd0362219b8-62ac3191"
+                                class="w-layout-layout quick-stack wf-layout-layout">
+                                <div id="w-node-e4791035-32f1-7fc0-1d9b-8cd0362219b9-62ac3191" class="w-layout-cell">
+                                  <input type="file" id="genCaseTdd_File" name="genCaseTdd_File" style="display:none"
+                                    accept="application/pdf">
+                                  <input type="button" data-wait="Please wait..." id="genCaseTdd_Upload"
+                                    class="combine-button w-button" value="上传PDF文档">
+                                  <span id="genCaseTdd_FileName"></span>
+                                </div>
+                                <div id="w-node-e4791035-32f1-7fc0-1d9b-8cd0362219bb-62ac3191" class="w-layout-cell">
+                                  <div class="div-block-7"><label for="genCaseTdd_Dropdown"
+                                      class="ms-input-label">用例类型</label><select id="genCaseTdd_Dropdown"
+                                      name="genCaseTdd_Dropdown" data-name="genCaseTdd_Dropdown" required=""
+                                      data-ms-member="PLACEHOLDER" class="ms-input w-select">
+                                      <option value="xmind">xmind</option>
+                                      <option value="excel">excel</option>
+                                      <option value="markdown">markdown</option>
+                                    </select></div>
+                                </div>
+                                <div id="w-node-_3d31263c-3d3d-6b8f-33ae-e8e6ad15a574-62ac3191" class="w-layout-cell">
+                                  <input type="submit" data-wait="Please wait..." id="genCaseTdd_Commit"
+                                    class="combine-button w-button" value="生成测试用例">
+                                </div>
+                                <div id="w-node-dc309e17-de6d-2f72-779f-05397bba44e0-62ac3191" class="w-layout-cell">
+                                </div>
+                              </div>
+                            </form>
+                            <div class="combine-form_success-message w-form-done">
+                              <div>生成测试用例成功</div>
+                            </div>
+                            <div class="combine-form_error-message w-form-fail">
+                              <div>Oops! Something went wrong while submitting the form.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div data-w-tab="Tab 2" class="w-tab-pane">
+            <div id="injectKnowledge_LoadingOverlay" class="loading-overlay"></div>
+            <div id="injectKnowledge_LoadingSpinner" class="loader" style="display:none;"></div>
+            <section class="combine-section_contact1">
+              <div class="combine-padding-global">
+                <div class="combine-container-small">
+                  <div class="combine-padding-section-medium">
+                    <div class="combine-contact1_component w-form">
+                      <form id="injectKnowledge" name="wf-form-Contact-1-Form" data-name="Contact 1 Form"
+                        action="/injectKnowledge" method="post" class="combine-form_form"
+                        data-wf-page-id="6616cf61dbfc1d1662ac3191"
+                        data-wf-element-id="e751481d-fbda-7efc-3b27-01c15c22a100" enctype="multipart/form-data">
+                        <div class="combine-form_field-wrapper"><label for="injectKnowledge_SpaceName"
+                            class="combine-form_label">表空间名称</label><input class="combine-form_input-grey w-input"
+                            maxlength="256" name="Contact-1-Name" data-name="Contact 1 Name" placeholder="请输入表空间名称"
+                            type="text" id="injectKnowledge_SpaceName" required=""></div>
+                        <div class="combine-form_field-wrapper"><label class="w-checkbox combine-form_checkbox">
+                            <div class="w-checkbox-input w-checkbox-input--inputType-custom combine-form_checkbox-icon">
+                            </div>
+                            <input type="checkbox" name="Contact-1-Checkbox" id="injectKnowledge_isSumary"
+                              data-name="Contact 1 Checkbox" style="opacity:0;position:absolute;z-index:-1"><span
+                              class="combine-form_checkbox-label w-form-label"
+                              for="Contact-1-Checkbox">多模态图片解析（注意：会增加耗时）</span>
+                          </label></div>
+                        <div id="w-node-ace662e9-02f9-dd9a-31bf-244404d4adce-62ac3191"
+                          class="w-layout-layout quick-stack wf-layout-layout">
+                          <div id="w-node-ace662e9-02f9-dd9a-31bf-244404d4adcf-62ac3191" class="w-layout-cell">
+                            <input type="file" id="injectKnowledge_File" name="injectKnowledge_File"
+                              style="display:none" accept="application/pdf">
+                            <input type="button" data-wait="Please wait..." id="injectKnowledge_Upload"
+                              class="combine-button w-button" value="上传PDF文档">
+                            <span id="injectKnowledge_FileName"></span>
+                          </div>
+                          <div id="w-node-ace662e9-02f9-dd9a-31bf-244404d4add0-62ac3191" class="w-layout-cell"></div>
+                          <div id="w-node-_05aa78ee-1ca1-0e0d-ee33-bfe56d9d394c-62ac3191" class="w-layout-cell"><input
+                              type="submit" data-wait="Please wait..." id="injectKnowledge_Commit"
+                              class="combine-button w-button" value="上传至向量库"></div>
+                          <div id="w-node-_3e648199-a3d4-75d3-c29b-19d9ed08a753-62ac3191" class="w-layout-cell"></div>
+                        </div>
+                      </form>
+                      <div class="combine-form_success-message w-form-done">
+                        <div>Thank you! Your submission has been received!</div>
+                      </div>
+                      <div class="combine-form_error-message w-form-fail">
+                        <div>Oops! Something went wrong while submitting the form.</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+          <div data-w-tab="Tab 3" class="w-tab-pane">
+            <!-- 顶部操作框 -->
+            <form id="email-form" name="email-form" class="form-2">
+              <div class="div-block-3">
+                <label for="client_SpaceName" class="field-label">名称：</label>
+                <input type="text" id="client_SpaceName" class="text-field w-input" maxlength="25" placeholder="">
+              </div>
+              <div class="div-block-4">
+                <button type="button" id="client_Query" class="spark-button-3 spark-dark-button w-button">查询</button>
+                <button type="button" id="client_Reset" class="spark-button-3 spark-secondary-button w-button">重置
+                </button>
+                <button type="button" id="client_Create" class="spark-button-3 spark-dark-button w-button">新建</button>
+              </div>
+            </form>
+            <div class="combine-container-small" style="background-color: white;">
+              <!-- 表格 -->
+              <div class="content-scene">
+                <!-- 表格 -->
+                <table>
+                  <thead>
+                    <tr>
+                      <th>id</th>
+                      <th>名称</th>
+                      <th>分片数量</th>
+                      <th>副本数量</th>
+                      <th>备注</th>
+                    </tr>
+                  </thead>
+                  <tbody class="ant-table-tbody">
+                  </tbody>
+                </table>
+              </div>
+              <!-- 弹窗“创建表” -->
+              <div class="loading-overlay-form" id="loading-overlay"></div>
+              <div id="createSpace_Bg" class="spark-centered-form spark-simple-shadow-small"
+                style="display: none; z-index: 1000; position: fixed;left: 50%;top: 50%;transform: translate(-50%, -50%);">
+                <div id="loadingSpinner" class="loader" style="display: none"></div>
+                <div class="div-block-2">
+                  <div class="spark-form-heading"><strong class="bold-text-2">创建表空间</strong></div>
+                  <button type="button" id="createSpace_Close" class="spark-button spark-light-button w-button">X
+                  </button>
+                </div>
+                <form id="createSpace" name="createSpace" data-name="Account Details Form - Dark Background"
+                  method="post" class="form" data-wf-page-id="661fb2ee63cd4d9ba2d6bc15"
+                  data-wf-element-id="e5bca3e3-fb51-a9a8-c0c1-bc6f5ecce3b5"><label
+                    for="createSpace_Name">名称</label><input class="spark-input w-input" maxlength="256"
+                    name="createSpace_Name" data-name="Account Details Form - Dark Background - Name"
+                    placeholder="请输入表名称" type="text" id="createSpace_Name" required="">
+                  <div class="div-block">
+                    <button type="button" id="createSpace_Close1"
+                      class="spark-button spark-secondary-button spark-button-expand-full-width w-button">取消
+                    </button>
+                    <input type="submit" id="createSpace_Commit" data-wait="Please wait..."
+                      class="spark-button spark-full-width w-button" value="确定">
+                  </div>
+                </form>
+              </div>
+
+              <!-- 弹窗"表详情" -->
+              <div id="detailSpace" class="spark-centered-form spark-simple-shadow-small"
+                style="display:none; z-index: 1000; position: fixed;left: 50%;top: 50%;transform: translate(-50%, -50%);">
+                <div class="div-block-2">
+                  <div class="spark-form-heading"><strong class="bold-text-2">表空间详情</strong></div>
+                  <button type="button" id="detailSpace_Close" class="spark-button spark-light-button w-button">X
+                  </button>
+                </div>
+                <div id="detailSpace_Details" class="div-block">
+                  <div style="display: flex; flex-wrap: wrap; margin-top: -20px;">
+                    <div style="flex: 0 50%; padding: 2px;">数据库id: </div>
+                    <div style="flex: 0 50%; padding: 2px;">数据表id: </div>
+                    <div style="flex: 0 50%; padding: 2px;">名称: </div>
+                    <div style="flex: 0 50%; padding: 2px;">检索模型: </div>
+                    <div style="flex: 0 50%; padding: 2px;">计算方式: </div>
+                    <div style="flex: 0 50%; padding: 2px;">分片索引阀值: </div>
+                  </div>
+                </div>
+                <div id="detailSpace_Details_Table" class="div-block"
+                  style="display: flex; flex-direction: column; margin-top: 20px;">
+                  表空间结构
+                  <div id="detailSpace_Details_Table1" class="div-block"></div>
+                </div>
+                <div class="div-block">
+                  <button type="button" id="detailSpace_Close1"
+                    class="spark-button spark-secondary-button spark-button-expand-full-width w-button">取消
+                  </button>
+                  <button type="button" id="detailSpace_Delete" class="spark-button spark-full-width w-button">删除
+                  </button>
+                </div>
+                <!-- 弹窗"确认删除" -->
+                <div id="deleteSpace" class="ant-popover-inner" role="tooltip" style="display:none;">
+                  <div class="spark-centered-form spark-simple-shadow-small w-form"
+                    style="z-index: 1001; position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; width: 200px; height: 100px;">
+                    <div class="ant-popover-message" style="margin-bottom: 10px; display: flex; align-items: center;">
+                      <span role="img" aria-label="exclamation-circle" class="anticon anticon-exclamation-circle"
+                        style="margin-right: 8px;color: #faad14;">
+                        <svg viewBox="64 64 896 896" focusable="false" data-icon="exclamation-circle" width="1em"
+                          height="1em" fill="currentColor" aria-hidden="true">
+                          <path
+                            d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm-32 232c0-4.4 3.6-8 8-8h48c4.4 0 8 3.6 8 8v272c0 4.4-3.6 8-8 8h-48c-4.4 0-8-3.6-8-8V296zm32 440a48.01 48.01 0 010-96 48.01 48.01 0 010 96z">
+                          </path>
+                        </svg>
+                      </span>
+                      <div class="ant-popover-message-title">确定删除?</div>
+                    </div>
+                    <div class="ant-popover-buttons">
+                      <button type="button" id="deleteSpace_Close"
+                        class="spark-button spark-secondary-button spark-button-expand-full-width w-button"
+                        style="padding-top: 5px; padding-bottom: 5px; font-size: 15px; margin-right: 10px;">取消
+                      </button>
+                      <input type="button" id="deleteSpace_Commit" class="spark-button spark-full-width w-button"
+                        style="padding-top: 5px; padding-bottom: 5px; font-size: 15px;" value="确定">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="{{ url_for('static', filename='js/jquery-3.5.1.min.js') }}" type="text/javascript"
+    crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='js/webflow.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='js/webfont.js') }}" type="text/javascript"></script>
+  <!-- 导入js，可以在script.js的基础上修改，也可以新建.js并添加 -->
+  <script src="{{ url_for('static', filename='js/script.js') }}" type="text/javascript"></script>
+
+  <!-- 本地调试 -->
+  <!-- <script src="../static/js/jquery-3.5.1.min.js" type="text/javascript" crossorigin="anonymous"></script>
+  <script src="../static/js/webflow.js" type="text/javascript"></script>
+  <script src="../static/js/webfont.js" type="text/javascript"></script>
+  <script src="../static/js/script.js" type="text/javascript"></script> -->
+</body>
+
+</html>

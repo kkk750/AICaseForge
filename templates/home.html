@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>test-llm-generate</title>
+  <!-- 导入样式文件，可以自己新建一个.css文件并添加 -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+
+  <!-- 本地调试 -->
+  <!-- <link rel="stylesheet" type="text/css" href="../static/css/styles.css"> -->
+</head>
+
+<body>
+  <div class="navbar-logo-left-2 home">
+    <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease"
+      role="banner" class="navbar-logo-left-container-2 shadow-three home w-nav">
+      <div class="container-2">
+        <div class="navbar-wrapper-2">
+          <a href="#" class="navbar-brand-2 w-nav-brand"><img
+              src="{{ url_for('static', filename='images/logo-white.png') }}" loading="lazy" width="220" sizes="220px"
+              alt="" class="image-2"></a>
+          <nav role="navigation" class="nav-menu-wrapper-2 w-nav-menu">
+            <ul role="list" class="nav-menu-two-2 w-list-unstyled">
+              <li>
+                <a href="{{ url_for('home') }}" aria-current="page" class="nav-link-2 home w--current">主页</a>
+              </li>
+              <li>
+                <a href="{{ url_for('workbench') }}" class="nav-link-2 home">工作台</a>
+              </li>
+              <li>
+                <div data-hover="false" data-delay="0" class="nav-dropdown-2 w-dropdown">
+                  <div class="nav-dropdown-toggle-2 w-dropdown-toggle">
+                    <div class="nav-dropdown-icon-2 home w-icon-dropdown-toggle"></div>
+                    <div class="text-block-4 home">资源</div>
+                  </div>
+                  <nav class="nav-dropdown-list-2 shadow-three mobile-shadow-hide w-dropdown-list">
+                    <a href="https://github.com/kkk750/AICaseForge" target="_blank"
+                      class="nav-dropdown-link-2 w-dropdown-link">远程仓库</a>
+                    <a href="#" class="nav-dropdown-link-2 w-dropdown-link">Resource Link 2</a>
+                    <a href="#" class="nav-dropdown-link-2 w-dropdown-link">Resource Link 3</a>
+                  </nav>
+                </div>
+              </li>
+              <li>
+                <div class="nav-divider-2"></div>
+              </li>
+              <li>
+                <a href="https://github.com/kkk750/AICaseForge" target="_blank"
+                  class="nav-link-accent-2 home">Docs</a>
+              </li>
+              <li class="mobile-margin-top-11">
+                <a href="{{ url_for('workbench') }}" class="button-primary-2 w-button">开始体验</a>
+              </li>
+            </ul>
+          </nav>
+          <div class="menu-button-2 w-nav-button">
+            <div class="w-icon-nav-menu"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="div-block-6">
+    <div class="container">
+      <h1 class="centered-heading margin-bottom-32px">AI 用例生成平台：大模型提效</h1>
+      <div class="hero-wrapper">
+        <div class="hero-split">
+          <p class="margin-bottom-24px">在快速迭代和高效研发的今天，<strong>AI 测试用例生成平台</strong>
+            <br>致力于结合大模型强大的自然语言处理能力，打造基于智能搜索和大模型的知识库解决方案。旨在帮助持续优化测试技术、提高测试效率，自动化地生成更全面和高质量的测试用例，打造 AI 时代的领先生产力。</p>
+          <a href="{{ url_for('workbench') }}" class="button-primary w-button">开始体验</a>
+        </div>
+        <div class="hero-split"></div>
+      </div>
+    </div>
+  </div>
+  <script src="{{ url_for('static', filename='js/jquery-3.5.1.min.js') }}" type="text/javascript"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='js/webflow.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='js/webfont.js') }}" type="text/javascript"></script>
+
+  <!-- 本地调试 -->
+  <!-- <script src="../static/js/jquery-3.5.1.min.js" type="text/javascript" crossorigin="anonymous"></script>
+  <script src="../static/js/webflow.js" type="text/javascript"></script>
+  <script src="../static/js/webfont.js" type="text/javascript"></script> -->
+</body>
+
+</html>
