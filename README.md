@@ -1,3 +1,6 @@
+# AICaseForge: Automated test case generation
+> 测试用例智能生成平台，仅需上传PRD文档，便可自动化生成多种格式（XMind、Excel、Markdown）的测试用例，帮助持续优化测试技术、提高测试效率
+
 # 环境准备
 
 1. 要求：`python >= 3.10`
