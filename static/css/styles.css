@@ -2861,10 +2861,11 @@ textarea.w-select {
 }
 
 .navbar-logo-left-2.home {
-  background-image: url('../images/bg-black.png');
+  background-image: url('../images/bg.png');
   background-position: 50%;
-  background-size: auto;
-  background-attachment: scroll;
+  background-size: cover;
+  background-attachment: fixed;
+  width: 100%;
 }
 
 .navbar-logo-left-container-2 {
@@ -2882,10 +2883,11 @@ textarea.w-select {
   border-top-width: 0;
   border-bottom: 1px solid #ccc;
   flex-flow: row;
-  width: 2000px;
+  width: 100%;
+  max-width: 100%;
   margin-bottom: 0;
-  margin-left: auto;
-  padding: 20px 0;
+  margin-left: 0;
+  padding: 20px 40px;
   display: block;
 }
 
@@ -5653,11 +5655,14 @@ textarea.w-select {
 
 .div-block-6 {
   background-image: url("../images/bg.png");
-  background-position: 50% 80%;
+  background-position: 50% 50%;
   background-size: cover;
+  background-attachment: fixed;
   margin-bottom: 0;
   padding-top: 220px;
   padding-bottom: 190px;
+  min-height: calc(100vh - 80px);
+  width: 100%;
 }
 
 .text-block-4 {
