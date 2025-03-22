@@ -2,11 +2,11 @@
   <div class="home">
     <div class="hero-section">
       <div class="container py-5">
-        <h1 class="text-center mb-4 text-white">AI 用例生成平台：大模型提效</h1>
+        <h1 class="text-center mb-4 text-white">AI 智能用例生成平台：大模型提效</h1>
         <div class="row align-items-center">
           <div class="col-md-6">
             <p class="mb-4 text-light">
-              在快速迭代和高效研发的今天，<strong>AI 测试用例生成平台</strong>
+              在快速迭代和高效研发的今天，<strong>AI 智能用例生成平台</strong>
               致力于结合大模型强大的自然语言处理能力，打造基于智能搜索和大模型的知识库解决方案。
               旨在帮助持续优化测试技术、提高测试效率，自动化地生成更全面和高质量的测试用例，打造 AI 时代的领先生产力。
             </p>
@@ -26,7 +26,7 @@ export default {
 
 <style scoped>
 .home {
-  min-height: calc(100vh - 56px);
+  min-height: 100vh;
   display: flex;
   align-items: center;
   background-image: url('/static/images/bg.png');
